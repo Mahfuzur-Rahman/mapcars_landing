@@ -1,4 +1,4 @@
-﻿/* ==========================================
+/* ==========================================
    MapCars Landing Page - Design System
    ========================================== */
 
@@ -634,6 +634,46 @@ ul {
     position: relative;
     display: flex;
     justify-content: center;
+    align-items: flex-end;
+    gap: 24px;
+    width: 100%;
+}
+
+/* Founder/client photo card — natural image height, right of phone on desktop */
+.hero-client-float {
+    position: relative;
+    width: 230px;
+    border-radius: 36px;
+    overflow: hidden;
+    flex-shrink: 0;
+    order: 2;
+    box-shadow:
+        0 24px 60px rgba(15, 23, 42, 0.24),
+        0 0 0 3px rgba(255, 255, 255, 0.92);
+    z-index: 1;
+    animation: fadeInUp 1s 1.1s ease forwards;
+    opacity: 0;
+}
+
+.hero-client-img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.hero-client-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 40px 14px 16px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, transparent 100%);
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
 }
 
 .phone-glow {
@@ -1653,7 +1693,24 @@ ul {
 .locations-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    max-height: 480px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 185, 217, 0.3) transparent;
+}
+
+.locations-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.locations-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.locations-list::-webkit-scrollbar-thumb {
+    background: rgba(0, 185, 217, 0.3);
+    border-radius: 2px;
 }
 
 .location-item {
@@ -1700,6 +1757,11 @@ ul {
 .loc-details {
     display: flex;
     flex-direction: column;
+}
+
+.loc-status.hq {
+    color: var(--accent);
+    font-weight: 700;
 }
 
 .loc-name {
@@ -2381,7 +2443,7 @@ a.contact-value:hover {
     }
 
     .phone-mockup-wrapper {
-        max-width: 380px;
+        max-width: 500px;
     }
 
     .contact-grid {
@@ -2431,6 +2493,22 @@ a.contact-value:hover {
 
     .hero {
         padding-top: 80px;
+    }
+
+    /* Mobile: stack image above phone */
+    .phone-mockup-wrapper {
+        flex-direction: column;
+        align-items: center;
+        max-width: 260px;
+        gap: 0;
+    }
+
+    .hero-client-float {
+        width: 230px;
+        border-radius: 20px;
+        order: 0;
+        margin-bottom: -24px;
+        z-index: 3;
     }
 
     .features-grid {
@@ -2529,6 +2607,10 @@ a.contact-value:hover {
 
     .stats-row {
         grid-template-columns: 1fr;
+    }
+
+    .hero-client-float {
+        width: 210px;
     }
 
     .css-phones {
@@ -2649,6 +2731,218 @@ a.contact-value:hover {
     .form-submit:hover {
         transform: none;
         box-shadow: none;
+    }
+}
+
+/* ---------- LOCATION CARDS GRID ---------- */
+.loc-cards-grid {
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Hub row — 4 major cities */
+.loc-hubs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+/* Remaining 9 locations */
+.loc-others {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+/* Base card */
+.loc-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 20px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    background: #0b1528;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.22);
+}
+
+.loc-card-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.loc-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(8, 15, 30, 0.95) 0%, rgba(8, 15, 30, 0.5) 60%, rgba(8, 15, 30, 0.15) 100%);
+    z-index: 2;
+    transition: background 0.3s ease;
+}
+
+.loc-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 70% 55% at 18% 18%, rgba(255,255,255,0.08), transparent),
+        radial-gradient(ellipse 45% 65% at 82% 75%, rgba(0,0,0,0.12), transparent);
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Subtle wave texture at top */
+.loc-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+        rgba(255,255,255,0.04),
+        rgba(255,255,255,0.15),
+        rgba(255,255,255,0.04));
+    z-index: 2;
+}
+
+.loc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.loc-card:hover .loc-card-img {
+    transform: scale(1.08);
+}
+
+.loc-card:hover .loc-card-overlay {
+    background: linear-gradient(to top, rgba(8, 15, 30, 0.98) 0%, rgba(8, 15, 30, 0.6) 60%, rgba(8, 15, 30, 0.25) 100%);
+}
+
+/* Hub cards — taller */
+.loc-card--hub {
+    min-height: 220px;
+}
+
+/* Decorative glow orb */
+.loc-card-glow {
+    position: absolute;
+    top: -25%;
+    right: -15%;
+    width: 55%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 68%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Status badge */
+.loc-card-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.88);
+    background: rgba(255,255,255,0.13);
+    border: 1px solid rgba(255,255,255,0.22);
+    padding: 4px 10px;
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    white-space: nowrap;
+    z-index: 3;
+}
+
+.loc-card-badge.hq {
+    background: rgba(0, 185, 217, 0.28);
+    border-color: rgba(0, 185, 217, 0.55);
+    color: #6ee7f7;
+}
+
+/* Card body */
+.loc-card-body {
+    position: relative;
+    z-index: 3;
+}
+
+/* Pin icon circle */
+.loc-card-icon {
+    width: 30px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.loc-card-city {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 4px;
+    line-height: 1.2;
+}
+
+.loc-card--hub .loc-card-city {
+    font-size: 24px;
+}
+
+.loc-card-landmark {
+    font-size: 11.5px;
+    font-family: 'Inter', sans-serif;
+    color: rgba(255, 255, 255, 0.62);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .loc-hubs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .loc-others {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .loc-hubs {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .loc-others {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .loc-card--hub {
+        min-height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    .loc-hubs,
+    .loc-others {
+        grid-template-columns: 1fr 1fr;
+    }
+    .loc-card--hub {
+        min-height: 160px;
+    }
+    .loc-card--hub .loc-card-city {
+        font-size: 20px;
     }
 }
 
