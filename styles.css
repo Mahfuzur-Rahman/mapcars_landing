@@ -2525,20 +2525,26 @@ a.contact-value:hover {
         padding-top: 80px;
     }
 
-    /* Mobile: stack image above phone */
+    /* Mobile: stack image above phone with a clean gap */
     .phone-mockup-wrapper {
         flex-direction: column;
         align-items: center;
         max-width: 260px;
-        gap: 0;
+        gap: 20px;
     }
 
     .hero-client-float {
         width: 230px;
         border-radius: 20px;
         order: 0;
-        margin-bottom: -24px;
+        margin-bottom: 0;
         z-index: 3;
+    }
+
+    /* Static phones on mobile: the float animation would ride up into the
+       CEO card and it overrides the scale() shrink at ≤480px */
+    .css-phones {
+        animation: none;
     }
 
     .features-grid {
